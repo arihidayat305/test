@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Undangan Pernikahan — Modern</title>
+<style>
+  :root{
+    --accent: rgba(255,255,255,0.95);
+    --overlay: rgba(0,0,0,0.45);
+    --glass: rgba(255,255,255,0.08);
+    --max-width: 1100px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;color:var(--accent);background:#000}
+  a{color:inherit;text-decoration:none}
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:40;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 18px;backdrop-filter: blur(6px);
+    background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.12));
+  }
+  .brand{font-weight:700;letter-spacing:0.6px}
+  nav{display:flex;gap:8px;align-items:center}
+  nav a{padding:8px 12px;border-radius:8px;font-size:14px;opacity:0.95}
+  nav a:hover{background:var(--glass)}
+  .hamburger{display:none;border:0;background:transparent;color:var(--accent);font-size:22px;padding:8px}
+  main{scroll-snap-type:y mandatory;overflow-y:auto;height:100vh}
+  section{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:30px;position:relative;scroll-snap-align:start;background-size:cover;background-position:center;
+  }
+  .overlay{position:absolute;inset:0;background:var(--overlay);z-index:1}
+  .content{position:relative;z-index:2;max-width:var(--max-width);width:100%;text-align:center;padding:20px}
+  h1{font-size:clamp(28px,5vw,48px);margin:6px 0}
+  h2{font-size:clamp(18px,3vw,26px);margin:6px 0;font-weight:600}
+  p{margin:8px 0;opacity:0.95}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));padding:16px;border-radius:12px;display:inline-block;text-align:left}
+  .countdown-box {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 14px;
+  }
+
+  .countdown-item {
+  background: rgba(255,255,255,0.15);
+  padding: 12px 16px;
+  border-radius: 10px;
+  min-width: 70px;
+  text-align: center;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.countdown-item .num {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.countdown-item .label {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+  form.rsvp{display:flex;flex-direction:column;gap:10px;max-width:420px;margin:12px auto}
+  form.rsvp input, form.rsvp button, form.rsvp textarea{
+    padding:12px;border-radius:8px;border:0;font-size:15px
+  }
+  form.rsvp button{background:rgba(255,255,255,0.12);color:var(--accent);cursor:pointer}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:12px}
+  .grid img{width:100%;height:220px;object-fit:cover;border-radius:10px;display:block}
+  .player{position:fixed;right:16px;bottom:18px;background:var(--glass);padding:8px;border-radius:999px;z-index:50;display:flex;gap:8px;align-items:center}
+  .player button{background:transparent;border:0;color:var(--accent);cursor:pointer;font-size:16px}
+  @media(max-width:900px){
+    nav{display:none}
+    .hamburger{display:inline-block}
+    header{padding:10px}
+  }
+  .fade-in{opacity:0;transform:translateY(12px);transition:opacity .6s ease, transform .6s ease}
+  .fade-in.visible{opacity:1;transform:translateY(0)}
+  .muted{opacity:.86;font-size:14px}
+  footer{position:fixed;left:12px;bottom:12px;z-index:50;font-size:13px;opacity:.7}
+
+/* Polaroid style */
+.polaroid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: start;
+}
+
+.polaroid {
+  background: none;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+  max-width: 260px;
+  text-align: center;
+  transform: rotate(-2deg);
+  transition: transform 0.3s ease;
+}
+
+.polaroid:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.polaroid img {
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+}
+
+.polaroid .caption {
+  margin-top: 10px;
+}
+
+.polaroid .caption h3 {
+  margin: 5px 0;
+}
+
+.polaroid .muted {
+  font-size: 0.9em;
+  color: #666;
+}
+
+/* Layout foto kiri + bio kanan */
+.bio-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  max-width: var(--max-width);
+  margin: auto;
+}
+
+.bio-text {
+  flex: 1;
+  min-width: 250px;
+  text-align: center;
+}
+
+
+footer.footer-clients {
+  display: none;           /* sembunyikan default */
+  position: fixed;         
+  left: 0;
+  right: 0;
+  bottom: -60px;
+  background: rgba(128, 123, 123, 0.6); /* kontras agar terlihat */
+  color: #fff;             /* teks jadi putih */
+  z-index: 100;
+  transition: opacity 1s ease; /* animasi fade */
+  opacity: 0;
+}
+
+footer.footer-clients.show {
+  display: block;
+  opacity: 1;
+}
+
+
+
+.footer-clients {
+  background-color: transparent;
+  text-align: center;
+  padding: 30px 15px;
+  font-family: Arial, sans-serif;
+  color: #333;
+  width: 100%;
+  margin: 0 auto;
+ 
+}
+
+.featured-text {
+  font-size: 8px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.clients-logos {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.clients-logos img {
+  max-height: 35px;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+  flex-shrink: 0;
+  width: auto;
+  height: 40px;
+}
+
+.clients-logos img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  cursor: pointer;
+}
+
+
+.footer-caption {
+  font-size: 10px;
+  color: #999;
+}
+
+/*Responsif untuk mobile*/
+@media(max-width:600px){
+  .footer-clients{
+    padding: 20px 10px;
+    max-width: 100%;
+  }
+
+  .featured-text {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .clients-logos img {
+    height: 30px;
+  }
+  .enquire-btn {
+    padding: 8px 20px;
+    font-size: 14px;
+  }
+  .footer-caption {
+    font-size: 10px;
+  }
+}
+
+
+/* Header mobile - menu slide */
+@media(max-width:900px){
+  nav.mobile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: fixed;
+    top: 56px; /* tinggi header */
+    right: -100%;
+    width: 200px;
+    background: rgba(0,0,0,0.85);
+    padding: 20px;
+    height: calc(100vh - 56px);
+    transition: right 0.3s ease;
+    z-index: 100;
+  }
+
+  nav.mobile-menu.show {
+    right: 0;
+  }
+
+  nav.mobile-menu a {
+    font-size: 16px;
+  }
+}
+
+/* Card responsif */
+.card {
+  width: 90%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Countdown responsif */
+.countdown-box {
+  flex-wrap: wrap;
+}
+
+.countdown-item {
+  min-width: 60px;
+  padding: 10px;
+}
+
+/* Galeri mobile */
+.grid {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+/* Polaroid untuk mobile */
+.polaroid {
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+/* Footer mobile */
+.footer-clients {
+  padding: 20px 10px;
+}
+
+/* Section background cover mobile */
+section {
+  background-size: cover;
+  background-position: center;
+}
+
+
+/* Hanya untuk card di slide 2 */
+#slide-2 .card {
+  background: rgba(255, 255, 255, 0.05); /* sangat transparan */
+  backdrop-filter: blur(4px); /* efek blur agar teks tetap terbaca */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* opsional: border tipis agar card terlihat */
+  color: black; /* teks tetap putih agar kontras dengan background */
+
+  /* Tengah-tengah */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* vertikal */
+  align-items: center;     /* horizontal */
+  text-align: center;      /* teks di tengah */
+  height: 100%;            /* pastikan card mengisi tinggi container */
+  padding: 20px;           /* spasi di sekitar teks */
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+.lightbox.show {
+  display: flex;
+  animation: fadeIn .3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+
+.bio-card {
+  margin: 30px auto;
+  max-width: 300px;
+  text-align: center;
+  animation: fadeUp 1s ease forwards;
+  opacity: 0;
+}
+
+.bio-card:nth-child(1) { animation-delay: 0.3s; }
+.bio-card:nth-child(3) { animation-delay: 0.9s; }
+
+.bio-photo {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 15px;
+  border: 6px solid rgba(255,255,255,0.9);
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+}
+
+.bio-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bio-name {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 8px 0 4px;
+}
+
+.bio-desc {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.bio-ig {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.12);
+  color: #000000;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+.bio-ig:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.and-icon {
+  font-size: 28px;
+  margin: 16px 0;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.85);
+  animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.bio-card {
+  margin: 30px auto;
+  max-width: 300px;
+  text-align: center;
+  opacity: 0;
+}
+
+/* Mempelai Pria */
+.bio-card.pria {
+  animation: fadeLeft 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+/* Mempelai Wanita */
+.bio-card.wanita {
+  animation: fadeRight 1s ease forwards;
+  animation-delay: 0.9s;
+}
+
+.and-icon {
+  font-size: 28px;
+  margin: 16px 0;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.85);
+  animation: fadeUp 1s ease forwards;
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+@keyframes fadeLeft {
+  from { opacity: 0; transform: translateX(-60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeRight {
+  from { opacity: 0; transform: translateX(60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Default: sembunyi */
+.hidden-anim {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+/* Aktif setelah kelihatan */
+.show-anim {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Cover pembuka */
+.cover {
+  position: fixed;
+  inset: 0;
+  background: cornsilk;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: cornsilk;
+  z-index: -1;
+}
+
+.cover-inner {
+  text-align: center;
+  color: #000000;
+ 
+}
+
+
+
+.cover h2 {
+position: absolute;
+  top: 120px;   /* jarak dari atas footer, atur sesuai kebutuhan */
+  left: 50%;
+  transform: translateX(-50%); /* biar tetap di tengah */
+  
+}
+
+.cover button {
+  margin-top: 16px;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.85);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cover.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/*FOnt cover depan*/
+.cover h1 {
+  position: relative;
+  top: 300px; /* geser ke bawah */
+  color: #666;
+  font-family: "Sacramento", cursive;
+  font-weight: 400;
+  font-size: 30px;
+  text-align: center;
+}
+
+.cover h2 {
+  color: #000;
+  font-family: "Sacramento", cursive;
+  font-weight: 400;
+  font-size: 50px;
+  font-style: normal;
+}
+
+
+
+
+
+
+
+
+
+
+.cover .countdown-box {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+.cover .countdown-item {
+  background: rgba(255,255,255,0.2);
+  padding: 10px 15px;
+  border-radius: 12px;
+}
+.cover .countdown-item .num {
+  font-size: 28px;
+  font-weight: bold;
+}
+.cover .countdown-item .label {
+  font-size: 14px;
+}
+
+
+
+/* Tombol */
+.cover-btn {
+position: absolute;
+  bottom: 90px;           /* jarak dari bawah */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 28px;
+  font-size: 17px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+  color: #000;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.cover-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+/* Ornamen */
+.ornament {
+  font-size: 20px;
+  margin: 12px 0;
+  color: rgba(255,255,255,0.8);
+}
+.ornament.top { margin-bottom: 20px; }
+.ornament.bottom { margin-top: 20px; }
+
+/* Saat hide */
+.cover.hide {
+  opacity: 0;
+  transform: scale(1.1);
+  visibility: hidden;
+}
+
+/*hapus ini untuk menyalakan ornamen
+#cover img {
+  display: none !important;
+} */
+
+
+/* Ornamen umum */
+.ornamen {
+  position: absolute;
+  width: 100px;
+  max-width: 120vw;
+  opacity: 0;
+  pointer-events: none;
+  animation: fadeInOut 6s ease-in-out infinite;
+}
+
+/* ==================== POSISI ==================== */
+
+/* Bawah kiri slot 1 */
+.orn-bottom-left1 {
+   position: absolute;
+  bottom: -10px;   /* atur naik-turun */
+  left: 10px;     /* atur geser kiri/kanan */
+  animation: fadeInOut 20s ease-in-out infinite;
+  transform: rotate(270deg) scale(2) !important;
+}
+
+/* Bawah kiri slot 2 (lebih tinggi dikit dari slot 1) */
+.orn-bottom-left2 {
+  bottom: 80px;   /* tambah tinggi dari slot 1 */
+  left: 40px;     /* agak ke kanan */
+  animation: fadeInOut 20s ease-in-out infinite;
+}
+
+/* Bawah tengah */
+.orn-bottom-center {
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%) scale(2) !important; /* biar pas di tengah */
+  animation: fadeInOut 6s ease-in-out infinite;
+}
+
+/* Atas */
+.orn-top {
+  position: absolute;
+  top: 20px;     /* ubah nilai ini untuk naik/turun */
+  right: 30px;   /* ubah nilai ini untuk geser kiri/kanan */
+  animation: fadeInOut 20s ease-in-out infinite;
+  transform:  scale(8) !important;
+}
+
+/* Atas kiri */
+.orn-top-left {
+  top: 10px;       /* atur naik-turun */
+  left: 40px;      /* atur geser kiri-kanan */
+  animation: fadeInOut 20s ease-in-out infinite;  /*tinggal menambahklan di scriptnya*/
+  transform: rotate(270deg) scale(3) scaleX(-1) !important; /*scaleX untuk balik horisontal*/
+}
+
+/* Atas kanan */
+.orn-top-right {    /*tinggal menambahklan di scriptnya*/
+  top: 40px;
+  right: 30px;
+  animation-delay: 4s;
+}
+
+/* Bawah kanan */
+.orn-bottom-right {     /*tinggal menambahklan di scriptnya*/
+  bottom: -10px;
+  right: 10px;
+  animation: fadeInOut 20s ease-in-out infinite;
+  transform: rotate(270deg) scale(2) scaleY(-1) !important; /*scaley untuk membalik vertical*/
+}
+
+
+/* Tengah */
+.orn-center {
+  position: absolute;
+  top: 43%;     /* posisi tengah vertikal */
+  left: 36%;    /* posisi tengah horizontal */
+  --orn-scale: 4; /* atur ukuran ornamen */
+  transform: translate(-59%, -50%) scale(var(--orn-scale)) ;
+  animation: spinFade 20s linear infinite ;
+  z-index: 2;
+
+}
+
+.orn-center2 {
+  position: absolute;
+  top: 52.2%;     /* posisi tengah vertikal */
+  left: 52.2%;    /* posisi tengah horizontal */
+  --orn-scale: 3; /* atur ukuran ornamen */
+  transform: translate(-59%, -50%) scale(var(--orn-scale)) ;
+animation: fadeInOut 20s ease-in-out infinite;
+z-index: 1;
+}
+
+
+/* ==================== ANIMASI ==================== */
+@keyframes fadeInOut {
+  0%   { opacity: 0; }
+  25%  { opacity: 1; }
+  75%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes spinFade {
+  0%   { opacity: 0;   transform: rotate(0deg)   scale(var(--orn-scale)); }
+  25%  { opacity: 1;   transform: rotate(90deg)  scale(var(--orn-scale)); }
+  75%  { opacity: 1;   transform: rotate(270deg) scale(var(--orn-scale)); }
+  100% { opacity: 0;   transform: rotate(360deg) scale(var(--orn-scale)); }
+}
+
+/* Navigasi dots samping kanan */
+.side-dots {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1000;
+}
+
+.side-dots a {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6); /* default putih transparan */
+  transition: background 0.3s, transform 0.3s;
+  display: block;
+}
+
+.side-dots a:hover,
+.side-dots a.active {
+  transform: scale(1.3);
+  background: #ff4081; /* warna aksen saat aktif / hover */
+}
+
+
+/* sembunyikan header*/
+header {
+  display: none !important;
+}
+
+/* Container dots */
+.side-dots {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 9999;
+}
+
+/* Dots */
+.side-dots .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  display: block;
+  transition: transform 0.3s, background 0.3s;
+}
+
+/* Hover effect */
+.side-dots .dot:hover {
+  transform: scale(1.3);
+  background: rgba(255,255,255,0.9);
+}
+
+/* Aktif sesuai section */
+.side-dots .dot.active {
+  background: #ff4081; /* warna aktif, bisa diganti */
+  transform: scale(1.4);
+}
+
+
+
+/*slide2 acara*/
+/* Box acara dengan blur */
+#acara .acara-box {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  padding: 25px 30px;
+  border-radius: 16px;
+  max-width: 700px;
+  margin: 0 auto 30px; /* ada jarak bawah */
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Judul acara (pakai Google Font kalau mau) */
+#acara h2 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 48px;
+  color: #8b5e3c;
+  margin-bottom: 20px;
+}
+
+/* Ayat di bawah box */
+#acara .ayat {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 15px;
+}
+
+#acara .ayat .arabic {
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 1.8;
+  direction: rtl; /* arabic right-to-left */
+  margin-bottom: 15px;
+}
+
+#acara .ayat .arti {
+  font-size: 16px;
+  color: #333;
+  font-style: italic;
+}
+
+
+#acara h2 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 42px;
+  color: #8b5e3c; /* warna emas kecoklatan */
+  margin-bottom: 20px;
+}
+
+/* Pastikan acara diurut atas-bawah */
+#acara {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Mobile force stacking */
+@media (max-width: 768px) {
+  #acara {
+    flex-direction: column !important;
+  }
+
+  #acara .acara-box,
+  #acara .ayat {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+
+
+/*hapus ini untuk menyalakan countdown*/
+#countdown { 
+  display: none !important;
+}
+
+
+  /* tilt effect */
+  .tilt-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+    perspective: 1200px;
+  }
+  .tilt-card img {
+    display:block;
+    border-radius:1px;
+    width:100%;
+    height:auto;
+    transform: translateZ(0);
+  }
+  .tilt-card:hover {
+    transform: rotateY(8deg) rotateX(6deg) scale(1.03);
+    box-shadow: 0 18px 35px rgba(0,0,0,0.35);
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div id="cover" class="cover">
+  
+
+<!--ornamen animasi --> 
+<!-- ==================== ORNAMEN BACKGROUND ==================== -->
+<!-- Tambahkan ini di dalam <body>, misalnya di dalam #cover -->
+
+<!-- Bawah kiri (2 ornamen) -->
+<img src="img/frime flower  (3).png" class="ornamen orn-bottom-left1" alt="ornamen bawah kiri 1">
+
+
+<!-- Bawah tengah -->
+<img src="img/frime flower  (4).png" class="ornamen orn-bottom-center" alt="ornamen bawah tengah">
+
+<!-- Atas -->
+<img src="img/frime flower  (5).png" class="ornamen orn-top" alt="ornamen atas">
+<img src="img/frime flower  (3).png" class="ornamen orn-top-left" alt="ornamen atas kiri 1">
+
+<!-- Bawah Kanan -->
+<img src="img/frime flower  (3).png" class="ornamen orn-bottom-right" alt="ornamen bawah kanan">
+
+<!-- Tengah halaman-->
+ <img src="img/frime flower  (2).png" class="ornamen orn-center" alt="ornamen tengah halaman">
+ <img src="img/inisial.png" class="ornamen orn-center2" alt="ornamen tengah halaman">
+
+<!-- 
+📌 Petunjuk Menambahkan / Mengatur Ornamen:
+1. Ganti src="namafile.png" dengan gambar kamu.
+2. Untuk menaikkan / menurunkan ornamen: ubah nilai "bottom" atau "top" di CSS.
+   Contoh: bottom: 20px → lebih naik, bottom: 60px → lebih turun.
+3. Untuk geser kiri/kanan: ubah "left" atau "right".
+4. Kalau mau tambah slot baru, copy <img> dan buat class baru, lalu atur posisinya di CSS.
+-->
+
+
+
+  <div class="cover-inner">
+    
+    
+    <h2 class="cover-heading">Wedding</h2>
+  <h1 class="cover-title">Dika & Diva</h1>
+
+ 
+  
+
+    <!-- Countdown -->
+    <div class="countdown-box" id="countdown">
+      <div class="countdown-item">
+        <div class="num" id="days">0</div>
+        <div class="label">Hari</div>
+      </div>
+      <div class="countdown-item">
+        <div class="num" id="hours">0</div>
+        <div class="label">Jam</div>
+      </div>
+      <div class="countdown-item">
+        <div class="num" id="minutes">0</div>
+        <div class="label">Menit</div>
+      </div>
+      <div class="countdown-item">
+        <div class="num" id="seconds">0</div>
+        <div class="label">Detik</div>
+      </div>
+    </div>
+
+    
+    <!-- Tombol -->
+    <button id="openBtn" class="cover-btn">💌 Buka Undangan</button>
+    
+  </div>
+</div>
+
+
+
+<!-- Tambahkan di dalam <body>, setelah cover -->
+<div class="side-dots">
+  <a href="#home"></a>
+  <a href="#mempelai"></a>
+  <a href="#acara"></a>
+  <a href="#galeri"></a>
+  <a href="#rsvp"></a>
+  <a href="#footer"></a>
+  <a href="#penutup"></a>
+</div>
+
+
+<header>
+  <div class="brand"> Undangan • DIKA & RIZKA</div>
+  <nav id="mainNav">
+    <a href="#slide-1">Home</a>
+    <a href="#slide-2">Detail</a>
+    <a href="#slide-2b">Mempelai</a>
+    <a href="#slide-3">Lokasi</a>
+    <a href="#slide-4">RSVP</a>
+    <a href="#slide-5">Galeri</a>
+    <a href="#slide-6">Ucapan & Rekening</a>
+  </nav>
+  <button class="hamburger" id="hambBtn" aria-label="menu">☰</button>
+</header>
+
+ 
+
+<main id="slides">
+  <!-- SLIDE 1 -->
+  <section id="home" style="background-image:url('img/bg sage.png')">
+    
+    <div class="content fade-in">
+      <div class="card" style="text-align:center">
+        <h1 id="couple">Diva Rina & Dika</h1>
+        <p>  </p>
+        <h2 id="greeting">وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً ۗاِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ</h2>
+        <p class="muted">Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir.</p>
+        
+  
+
+      </div>
+      <p style="margin-top:14px">QS. Ar-Rum Ayat 21</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 -->
+ <section id="acara" style="background-image:url('img/bg sage.png')">
+  <div class="content acara-box">
+    <h2>Detail Acara</h2>
+    <p>Akad Nikah: Minggu, 20 Oktober 2025 - 09:00 WIB</p>
+    <p>Resepsi: Minggu, 20 Oktober 2025 - 11:00 WIB</p>
+    <p>Alamat: Gedung Graha Saba Buana, Solo</p>
+  </div>
+
+  <div class="ayat">
+    <p class="arabic">
+      وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا 
+      لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ 
+      إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ
+    </p>
+    <p class="arti">
+      “Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan
+      untukmu pasangan-pasangan dari jenismu sendiri, supaya kamu merasa
+      tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan
+      sayang...”  
+      <br><em>(QS. Ar-Rum: 21)</em>
+    </p>
+  </div>
+</section>
+
+
+
+<!-- SLIDE 2B -->
+<section id="acara" style="background-image:url('img/bg sage.png')">
+  
+  <div class="content fade-in">
+
+    <!-- Mempelai Pria -->
+    <div class="bio-card pria hidden-anim">
+  <div class="bio-photo">
+    <img src="img/mempelai-pria.jpg" alt="Mempelai Pria">
+  </div>
+  <h3 class="bio-name">Dika Pratama</h3>
+  <p class="bio-desc">Putra dari Bapak Ahmad & Ibu Siti</p>
+  <p class="muted">Mahasiswa • Pecinta kopi • Hobi traveling</p>
+  <a href="https://instagram.com/liaartika__" target="_blank" class="bio-ig">@dikapratama</a>
+</div>
+
+<div class="and-icon hidden-anim">&amp;</div>
+
+<div class="bio-card wanita hidden-anim">
+  <div class="bio-photo">
+    <img src="img/mempelai-wanita.jpg" alt="Mempelai Wanita">
+  </div>
+  <h3 class="bio-name">Diva Rina</h3>
+  <p class="bio-desc">Putri dari Bapak Budi & Ibu Rina</p>
+  <p class="muted">Desainer • Penyuka musik • Hobi fotografi</p>
+  <a href="https://instagram.com/hdyt_arr" target="_blank" class="bio-ig">@divarina</a>
+</div>
+
+  </div>
+</section>
+
+
+  <!-- SLIDE 3 -->
+  <section id="galeri" style="background-image:url('img/bg sage.png')">
+   
+    <div class="content fade-in">
+      <div class="card" style="width:100%;max-width:900px">
+        <h2>Lokasi Acara</h2>
+        <div style="width:100%;height:420px;border-radius:10px;overflow:hidden;margin-top:8px">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4908.046226484083!2d110.80412107591401!3d-7.5446815744847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a141e6bbb7871%3A0xe84febb8efd87dcd!2sGraha%20Saba%20Buana!5e1!3m2!1sid!2sid!4v1755781868356!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <p class="muted" style="margin-top:8px">Ketuk peta untuk arah (mobil / transportasi umum).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 -->
+  <section id="rsvp" style="background-image:url('img/bg sage.png')">
+    
+    <div class="content fade-in">
+      <div class="card" style="max-width:520px">
+        <h2>Konfirmasi Kehadiran</h2>
+        <form class="rsvp" id="rsvpForm">
+          <input name="nama" id="rsvpNama" placeholder="Nama lengkap" required />
+          <input name="jumlah" id="rsvpJumlah" type="number" min="0" placeholder="Jumlah tamu" required />
+          <textarea name="pesan" id="rsvpPesan" placeholder="Pesan / Doa (opsional)" rows="3"></textarea>
+          <div style="display:flex;gap:8px;justify-content:center">
+            <button type="submit">Kirim via Email</button>
+            <button type="button" id="sendWA">Kirim via WhatsApp</button>
+          </div>
+        </form>
+        <p class="muted" style="margin-top:8px">Atau hubungi: <strong id="phoneDisplay">+62 812-xxxx-xxxx</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 -->
+  <section id="footer" style="background-image:url('img/bg sage.png')">
+    <div class="content fade-in">
+      <div class="card" style="width:100%;max-width:1000px">
+        <h2>Foto Prewedding</h2>
+        <div class="grid" id="gallery">
+          <img src="img/mempelai-pria.jpg" alt="prewedding 1">
+          <img src="img/mempelai-wanita.jpg" alt="prewedding 2">
+          <img src="img/mempelai-pria.jpg" alt="prewedding 3">
+          <img src="img/mempelai-wanita.jpg" alt="prewedding 4">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="lightbox" id="lightbox">
+    <img src="" alt="preview" id="lightboxImg">
+  </div>
+
+
+  <!-- SLIDE 6 -->
+  <section id="penutup" style="background-image:url('img/bg sage.png')">
+    
+    <div class="content fade-in">
+      <div class="card" style="max-width:520px;text-align:center">
+        <h2>Ucapan Terima Kasih</h2>
+        <p>Terima kasih atas doa, dukungan, dan kehadiran Anda di hari istimewa kami. Semoga kebahagiaan ini menjadi berkah untuk kita semua.</p>
+
+        <h3 style="margin-top:20px">Nomor Rekening</h3>
+        <p><strong>Bank BCA</strong><br>1234567890 a.n. Dika Pratama</p>
+        <p><strong>Bank Mandiri</strong><br>9876543210 a.n. Rizka Amelia</p>
+
+        <p class="muted" style="margin-top:12px">Konfirmasi transfer dapat melalui WhatsApp.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="player" id="player">
+  <button id="playBtn" aria-label="play/pause">⏯</button>
+  <div style="font-size:13px">Musik</div>
+</div>
+
+<footer class="footer-clients">
+  
+  <div class="clients-logos">
+    <a href="https://www.instagram.com/hdyt_arr/" target="_blank">
+  <img src="img/instagram.jpg" alt="Instagram" width="50">
+  <p class="featured-text">LIA YUNIAR</p>
+  
+</a>
+
+   
+  </div>
+  
+  <p class="footer-caption">@HDYT_ARR</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+<script>
+// menu mobile
+document.getElementById('hambBtn').addEventListener('click', ()=> {
+  const nav = document.getElementById('mainNav');
+  nav.style.display = nav.style.display === 'flex' ? '' : 'flex';
+});
+
+// fade-in animasi
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(ent=>{ if(ent.isIntersecting) ent.target.classList.add('visible'); });
+},{threshold:0.15});
+document.querySelectorAll('.fade-in').forEach(f=>io.observe(f));
+
+// smooth scroll nav
+document.querySelectorAll('header nav a').forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// navigasi keyboard
+let sections = Array.from(document.querySelectorAll('main section'));
+let currentIndex = 0;
+function scrollToIndex(i){
+  if(i<0) i=0; if(i>=sections.length) i=sections.length-1;
+  currentIndex = i;
+  sections[i].scrollIntoView({behavior:'smooth'});
+}
+window.addEventListener('scroll', ()=> {
+  const top = window.scrollY + 60;
+  for(let i=0;i<sections.length;i++){
+    if(top >= sections[i].offsetTop - 10) currentIndex = i;
+  }
+});
+window.addEventListener('keydown', e=>{
+  if(e.key === 'ArrowDown' || e.key==='PageDown') { e.preventDefault(); scrollToIndex(currentIndex+1) }
+  if(e.key === 'ArrowUp' || e.key==='PageUp') { e.preventDefault(); scrollToIndex(currentIndex-1) }
+});
+
+// countdown
+(function(){
+  const target = new Date("2025-10-20T09:00:00+07:00").getTime();
+  function tick(){
+    const now = Date.now();
+    let d = target - now;
+    if(d <= 0){
+      document.getElementById('countdown').innerHTML = "<p>Acara telah dimulai!</p>";
+      return;
+    }
+    const days = Math.floor(d / (1000*60*60*24)); d -= days*86400000;
+    const hours = Math.floor(d / (1000*60*60)); d -= hours*3600000;
+    const minutes = Math.floor(d / (1000*60)); d -= minutes*60000;
+    const seconds = Math.floor(d / 1000);
+
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
+  }
+  tick(); setInterval(tick, 1000);
+})();
+
+// RSVP form
+document.getElementById('rsvpForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const nama = document.getElementById('rsvpNama').value;
+  alert(`Terima kasih ${nama}! (Form belum terhubung ke backend.)`);
+  e.target.reset();
+});
+
+// kirim WA
+document.getElementById('sendWA').addEventListener('click', ()=>{
+  const nama = document.getElementById('rsvpNama').value || '[Tanpa nama]';
+  const jumlah = document.getElementById('rsvpJumlah').value || '0';
+  const pesan = `Halo, saya ${nama} konfirmasi hadir dengan ${jumlah} tamu.`;
+  const nomor = '6281234567890';
+  window.open(`https://wa.me/${nomor}?text=${encodeURIComponent(pesan)}`, '_blank');
+});
+
+// audio player (placeholder)
+const audio = new Audio('audio/lestari.mp3');
+audio.loop = true; audio.preload = 'auto';
+let isPlaying = false;
+const playBtn = document.getElementById('playBtn');
+playBtn.addEventListener('click', ()=>{
+  if(!isPlaying){
+    audio.play().then(()=>{ isPlaying = true; playBtn.textContent='⏸'; }).catch(()=>{ alert('Tidak dapat memutar audio — ganti sumber audio di file.'); });
+  } else { audio.pause(); isPlaying = false; playBtn.textContent='▶'; }
+});
+
+// autoplay musik setelah interaksi pertama
+function startMusicOnce() {
+  if (!isPlaying && audio.src){
+    audio.play().then(() => {
+      isPlaying = true;
+      playBtn.textContent = '⏸';
+    }).catch(() => {
+      console.warn('Autoplay gagal, user harus menekan tombol play.');
+    });
+  }
+  window.removeEventListener('scroll', startMusicOnce);
+  document.removeEventListener('click', startMusicOnce);
+}
+window.addEventListener('scroll', startMusicOnce);
+document.addEventListener('click', startMusicOnce);
+
+// VanillaTilt init
+VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+  max: 12,
+  speed: 400,
+  glare: true,
+  "max-glare": 0.18,
+  scale: 1.02
+});
+
+// ganti teks pasangan & nomor
+document.getElementById('couple').textContent = 'Diva Rina & Dika';
+document.getElementById('phoneDisplay').textContent = '+62 812-3456-7890';
+
+// Footer hanya muncul mulai slide ke-4
+const footer = document.querySelector('footer.footer-clients');
+const sectionsAll = document.querySelectorAll('main section');
+
+const ioFooter = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const index = Array.from(sectionsAll).indexOf(entry.target);
+      if (index >= 3) {
+        footer.classList.add('show');
+      } else {
+        footer.classList.remove('show');
+      }
+    }
+  });
+}, { threshold: 0.5 });
+
+sectionsAll.forEach(sec => ioFooter.observe(sec));
+
+// Lightbox galeri
+const gallery = document.querySelectorAll('#gallery img');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+
+gallery.forEach(img => {
+  img.addEventListener('click', () => {
+    lightboxImg.src = img.src;
+    lightbox.classList.add('show');
+  });
+});
+
+lightbox.addEventListener('click', () => {
+  lightbox.classList.remove('show');
+});
+
+
+  const elements = document.querySelectorAll('.hidden-anim');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show-anim');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  elements.forEach(el => observer.observe(el));
+
+// Tombol buka undangan
+document.getElementById('openBtn').addEventListener('click', () => {
+  const cover = document.getElementById('cover');
+  cover.classList.add('hide');
+
+  // scroll ke slide-1 (bisa diganti slide-2 kalau mau langsung ke detail)
+  document.getElementById('slide-1').scrollIntoView({behavior:'smooth'});
+  
+  // opsional: langsung play musik
+  startMusicOnce();
+});
+
+
+</script>
+</body>
+</html>
